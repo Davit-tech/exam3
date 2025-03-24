@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+<nav>
+    <ul>
+
+        <li><a href="/post/posts">Posts</a></li>
+
+        <li><a href="/user/users">See Users List</a></li>
+        <li><a href="/user/profile">GO to my profile</a></li>
+        <li><a href="#" class="logout"> log Out</a></li>
+
+    </ul>
+</nav>
+
+<h1>Create Post</h1>
+<form id="createPost-form" >
+    <div class="form-info">
+        <label>Post Title
+            <input type="text" name="title">
+        </label>
+        <label for="author-input">Author </label>
+            <input type="text" name="author" id="author-input"  readonly>
+
+    </div>
+    <div class="form-text">
+        <label>Post Text
+            <textarea name="text"></textarea>
+        </label>
+    </div>
+    <div>
+        <label>
+            <input type="date" name="date" id="post-date" value="">
+        </label>
+    </div>
+    <div class="form-button">
+        <input type="submit" value="Submit">
+    </div>
+</form>
+
+
+
+<script src="/js/posts/createPost.js"></script>
+</body>
+</html>

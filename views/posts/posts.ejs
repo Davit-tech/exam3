@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<nav>
+    <ul>
+
+        <li><a href="/post/posts">Posts</a></li>
+        <li><a href="/post/posts/create">New Post</a></li>
+        <li><a href="/user/users">See Users List</a></li>
+        <li><a href="/user/profile">GO to my profile</a></li>
+            <li><a href="#" class="logout"> log Out</a></li>
+
+    </ul>
+</nav>
+
+<h1>Posts:</h1>
+<form id="searchForm">
+    <input type="text" id="searchInput" placeholder="Search posts..." />
+    <button type="submit">Search</button>
+</form>
+
+
+<div id="search-results"></div>
+
+<div id="user-posts"></div>
+<div id="pagination"></div>
+
+<div id="pagination-container" class="pagination"></div>
+
+
+<script src="/js/posts/postsChecker.js"></script>
+
+<script src="/js/posts/posts.js"></script>
+<script src="/js/search.js"></script>
+
+
+
+</body>
+</html>
