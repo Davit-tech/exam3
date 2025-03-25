@@ -20,7 +20,12 @@ if (editProfileForm) {
         if (!res.ok) {
             alert("Error");
         } else {
+            const updatedUserData = await res.json();
+            localStorage.setItem("user", JSON.stringify(updatedUserData));
+
+            alert("User updated successfully.");
             window.location.href = "/user/profile";
+
         }
     });
 }

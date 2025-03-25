@@ -1,6 +1,32 @@
 (async () => {
+    if (!localStorage.getItem("token")) {
+        window.location.href = "/user/login";
+        return;
+    }
+
+    const response = await fetch("/post/posts/data", {
+        method: "GET",
+        headers: {
+            "token": localStorage.getItem("token"),
+            "Content-Type": "application/json"
+        },
+    });
+
+    if (!response.ok) {
+        localStorage.removeItem("token");
+        location.href = "/user/login";
+        return;
+    }
+
+    const postsData = await response.json();
+    localStorage.setItem("posts", JSON.stringify(postsData.posts));
+    localStorage.setItem("pagination", JSON.stringify({
+        currentPage: postsData.currentPage,
+        totalPages: postsData.totalPages
+    }));
+
     const userInfo = document.querySelector("#user-posts");
-    const userData = JSON.parse(localStorage.getItem("posts"));
+    const userData = postsData.posts;
     const userName = JSON.parse(localStorage.getItem("user"));
 
     const renderPosts = (posts, userId) => {
@@ -93,7 +119,6 @@
             }
         }
     });
-
 
     const logout = document.querySelector(".logout");
     if (logout) {

@@ -1,12 +1,36 @@
 (async () => {
     let userInfo = document.querySelector("#user-info");
-    const userData = JSON.parse(localStorage.getItem("user"));
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        window.location.href = "/user/login";
+        return;
+    }
+
+    const response = await fetch("/user/profile/data", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "token": token,
+        },
+    });
+
+    if (!response.ok) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.location.href = "/user/login";
+        return;
+    }
+
+    const userData = await response.json();
+    localStorage.setItem("user", JSON.stringify(userData));
+
     if (userInfo && userData) {
         const {id, first_name, last_name, email} = userData.user;
         userInfo.innerHTML = `
             <pre class="userdata">
 First Name: ${first_name}
-id : ${id}
+id: ${id}
 Last Name: ${last_name}
 Email: ${email}
             </pre>
@@ -36,10 +60,10 @@ Email: ${email}
                 },
             });
 
-
             if (res.ok) {
-                alert("user successfully deleted!");
+                alert("User successfully deleted!");
                 localStorage.removeItem("token");
+                localStorage.removeItem("user");
                 window.location.href = "/user/login";
             } else {
                 alert("Error deleting user");
@@ -54,6 +78,7 @@ let logout = document.querySelector(".logout");
 if (logout) {
     logout.addEventListener("click", () => {
         localStorage.removeItem("token");
+        localStorage.removeItem("user");
         window.location.href = "/user/login";
         window.location.reload();
     });

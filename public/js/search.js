@@ -8,7 +8,8 @@ document.getElementById("searchForm").addEventListener("submit", async function 
         return;
     }
     try {
-        const res = await fetch(`/post/search?q=${encodeURIComponent(query)}`);
+        const res = await fetch(`/post/search?q=${query}`);
+
         const data = await res.json();
 
         resultsContainer.innerHTML = "";

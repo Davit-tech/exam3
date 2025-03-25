@@ -18,6 +18,7 @@ if (loginForm) {
                 localStorage.setItem("token", result.token);
                 window.location.href = "/user/profile";
             } else {
+
             }
         } catch (error) {
             console.log(error);
