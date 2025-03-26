@@ -1,18 +1,29 @@
 (async () => {
-    if (!localStorage.getItem("token")) {
-        window.location.href = "/user/login";
-    } else {
-        const response = await fetch(`/user/users/data`, {
-            method: "GET",
-            headers: {
-                "token": localStorage.getItem("token"),
-                "Content-Type": "application/json"
-            },
+    let userInfo = document.querySelector("#user-info");
+    const userData = JSON.parse(localStorage.getItem("usersList"));
+
+    if (userInfo && userData && Array.isArray(userData.users)) {
+        let userHtml = "";
+        userData.users.forEach(user => {
+            userHtml += `
+                 <pre class="userdata">
+ First Name: ${user.first_name}
+ Last Name: ${user.last_name}
+ Email: ${user.email}
+                 </pre>
+             `;
         });
-        if (!response.ok) {
-            localStorage.removeItem("token");
-            location.href = "/user/login";
-        }
-        localStorage.setItem("usersList", JSON.stringify(await response.json()));
+        userInfo.innerHTML = userHtml;
+    } else {
+        console.log("No user data");
     }
 })();
+
+let logout = document.querySelector(".logout");
+if (logout) {
+    logout.addEventListener("click", () => {
+        localStorage.removeItem("token");
+        window.location.href = "/user/login";
+
+    });
+}

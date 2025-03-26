@@ -4,7 +4,7 @@ if (loginForm) {
         event.preventDefault();
         const formData = new FormData(loginForm);
         const data = Object.fromEntries(formData.entries());
-
+        console.log(data)
         try {
             const response = await fetch("/user/login", {
                 method: "POST",
@@ -14,7 +14,10 @@ if (loginForm) {
                 body: JSON.stringify(data),
             });
             const responseData = await response.json();
-            if (!response.ok) {
+            if (response.ok) {
+                localStorage.setItem("token", responseData.token);
+                window.location.href = "/user/profile";
+            } else {
                 document.querySelectorAll(".error-text").forEach(el => el.remove());
                 if (responseData.fields) {
                     for (const [field, message] of Object.entries(responseData.fields)) {
@@ -28,9 +31,6 @@ if (loginForm) {
                         }
                     }
                 }
-            } else {
-                window.location.href = "/user/login";
-
             }
         } catch (error) {
             console.log(error);

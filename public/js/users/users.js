@@ -19,11 +19,3 @@ Email: ${user.email}
     }
 })();
 
-let logout = document.querySelector(".logout");
-if (logout) {
-    logout.addEventListener("click", () => {
-        localStorage.removeItem("token");
-        window.location.href = "/user/login";
-        window.location.reload();
-    });
-}
