@@ -4,7 +4,7 @@ if (registerForm) {
         event.preventDefault();
         const formData = new FormData(registerForm);
         const data = Object.fromEntries(formData.entries());
-        console.log(data)
+
         try {
             const response = await fetch("/user/register", {
                 method: "POST",
@@ -13,14 +13,26 @@ if (registerForm) {
                 },
                 body: JSON.stringify(data),
             });
-
+            const responseData = await response.json();
             if (!response.ok) {
-                console.log("error", response.status);
+                document.querySelectorAll(".error-text").forEach(el => el.remove());
+                if (responseData.fields) {
+                    for (const [field, message] of Object.entries(responseData.fields)) {
+                        const inputElement = document.querySelector(`[name="${field}"]`);
+                        if (inputElement) {
+                            const errorSpan = document.createElement("span");
+                            errorSpan.classList.add("error-text");
+                            errorSpan.style.color = "red";
+                            errorSpan.textContent = message;
+                            inputElement.parentNode.appendChild(errorSpan);
+                        }
+                    }
+                }
             } else {
                 window.location.href = "/user/login";
+
             }
-            const responseData = await response.json();
-            console.log(responseData);
+
 
         } catch (error) {
             console.log(error);
